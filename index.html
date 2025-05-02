@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Indian Leak MMS</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            color: yellow;
+            text-align: center;
+            text-shadow: 0 0 10px red;
+        }
+        .disclaimer {
+            text-align: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: none;
+        }
+        .category-btn {
+            background-color: #222;
+            border: 1px solid #ff0;
+            border-radius: 20px;
+            color: #ff0;
+            padding: 5px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 5px;
+            transition: 0.2s;
+        }
+        .category-btn:hover {
+            background-color: #333;
+            color: #fff;
+        }
+        .video-card {
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #111;
+        }
+    </style>
+</head>
+<body>
+    <h1>‼ Viral Indian Leak MMS ‼</h1>
+    <p class="disclaimer">Turn Ad Blocker off for proper function of site. Enjoy your fap session 😏</p>
+    <input type="text" id="searchInput" placeholder="Search by tag..." onkeyup="filterVideos()">
+    <div id="categorySection" style="margin: 10px 0; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+    <div id="videoContainer"></div>
+
+    <script>
+        let allTags = new Set();
+        const sheetID = "1tMby5ZNJU9Ymx5XBJhHqL67DOVIpc_n2lnGqsk_JPCg";
+        const apiKey = "AIzaSyAfuYJHxubZ_v5AGToEcKPd4P_PifgDMCo";
+        const sheetRange = "Sheet1";
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${sheetRange}?key=${apiKey}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const rows = data.values.slice(1);
+                displayVideos(rows);
+                extractTagsFromSheet(rows);
+            });
+
+        function displayVideos(data) {
+            const container = document.getElementById("videoContainer");
+            container.innerHTML = "";
+            data.forEach(row => {
+                const [id, title, embed, alt1, alt2, alt3, tags, desc, views] = row;
+                const div = document.createElement("div");
+                div.className = "video-card";
+                div.innerHTML = `
+                    <h3>${title}</h3>
+                    <iframe src="${embed}" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+                    <p>${desc}</p>
+                    <p><strong>Tags:</strong> ${tags}</p>
+                    <a href="${alt1}" target="_blank">Alternate Link 1</a> |
+                    <a href="${alt2}" target="_blank">Alternate Link 2</a> |
+                    <a href="${alt3}" target="_blank">Alternate Link 3</a>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function extractTagsFromSheet(data) {
+            data.forEach(row => {
+                const tags = row[6];
+                if (tags) {
+                    tags.split(",").forEach(tag => {
+                        allTags.add(tag.trim().toLowerCase());
+                    });
+                }
+            });
+            createCategoryButtons();
+        }
+
+        function createCategoryButtons() {
+            const section = document.getElementById("categorySection");
+            allTags.forEach(tag => {
+                const btn = document.createElement("button");
+                btn.innerText = tag;
+                btn.className = "category-btn";
+                btn.onclick = () => {
+                    document.getElementById("searchInput").value = tag;
+                    filterVideos();
+                };
+                section.appendChild(btn);
+            });
+        }
+
+        function filterVideos() {
+            const term = document.getElementById("searchInput").value.toLowerCase();
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const filtered = data.values.slice(1).filter(row => row[6].toLowerCase().includes(term));
+                    displayVideos(filtered);
+                });
+        }
+    </script>
+</body>
+</html>
